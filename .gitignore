@@ -288,14 +288,12 @@ tmp-php.ini
 !/win32/build/Makefile
 
 AboutUS
-assets
 Brochure
 cgi-bin
 eBook
 eStore
 font
 Gold
-images
 Join
 less
 Library
