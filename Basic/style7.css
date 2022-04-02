@@ -1,0 +1,23 @@
+input, label {
+  margin: 3px 5px;
+}
+
+
+.form-control {
+  float: left;
+}
+#inputStreet {
+  width: 100%;
+}
+
+#inputCity {
+  width: 33%;
+}
+
+#inputState {
+  width: 25%;
+}
+
+#inputZip {
+  width: 28%;
+}
