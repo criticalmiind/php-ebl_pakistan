@@ -91,7 +91,7 @@ if(isset($_GET['userid'])){
 											
 											$query_user = mysqli_query($con,"select * from user where email='$userid'");
 											$result = mysqli_fetch_array($query_user);
-											$account = $result['account'];
+											$account = $result['special_account']?$result['special_account']:$result['account'];
 											$login_date = $result['login_date'];											
 										?>
                                         	<tr>
