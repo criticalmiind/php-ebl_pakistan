@@ -1,22 +1,8 @@
 <?php
-include('php-includes/connect.php');
 include('php-includes/check-login.php');
-$userid = $_SESSION['userid'];
-$search = $userid;
+require('php-includes/connect.php');
 ?>
-<?php
-function tree_data($userid){
-	global $con;
-	$data = array();
-	$query = mysqli_query($con,"select * from tree where userid='$userid'");
-	$result = mysqli_fetch_array($query);
-	$data['left'] = $result['left'];
-	$data['right'] = $result['right'];
-	$data['leftcount'] = $result['leftcount'];
-	$data['rightcount'] = $result['rightcount'];
-	return $data;
-}
-?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -28,7 +14,7 @@ function tree_data($userid){
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Mlml Website  - Tree</title>
+    <title>Mlml Website  - Income History</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -58,7 +44,7 @@ function tree_data($userid){
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">Tree</h1>
+                        <h1 class="page-header">Income History</h1>
                     </div>
                     <!-- /.col-lg-12 -->
                 </div>
@@ -66,25 +52,41 @@ function tree_data($userid){
                 <div class="row">
                 	<div class="col-lg-12">
                     	<div class="table-responsive">
-                        	<table class="table" align="center" border="0" style="text-align:center">
-                            	<tr height="150">
-                                <?php
-									$data = tree_data($search);
-								?>
-                                	<td><?php echo $data['leftcount'] ?></td>
-                                    <td colspan="2"><i class="fa fa-user fa-4x" style="color:#736E6F"></i><p><?php  echo $search; ?></p></td>
-                                    <td><?php echo $data['rightcount'] ?></td>
-                                </tr>
-                                <tr height="150">
-                                    <td colspan="2"><i class="fa fa-user fa-4x" style="color:#736E6F"></i></td>
-                                    <td colspan="2"><i class="fa fa-user fa-4x" style="color:#736E6F"></i></td>
-                                </tr>
-                                <tr height="150">
-                                    <td><i class="fa fa-user fa-4x" style="color:#736E6F"></i></td>
-                                    <td><i class="fa fa-user fa-4x" style="color:#736E6F"></i></td>
-                                    <td><i class="fa fa-user fa-4x" style="color:#736E6F"></i></td>
-                                    <td><i class="fa fa-user fa-4x" style="color:#a736E6F"></i></td>
-                                </tr>
+                        	<table class="table table-bordered table-striped">
+                            	<thead>
+                                	<tr>
+                                    	<th>S.N.</th>
+                                        <th>Userid</th>
+                                        <th>Amount</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+								<?php
+                                	$query = mysqli_query($con,"select * from income_received order by id desc");
+									if(mysqli_num_rows($query)>0){
+										$i=1;
+										while($row=mysqli_fetch_array($query)){
+										?>
+                                        	<tr>
+                                            	<td><?php echo $i; ?></td>
+                                                <td><?php echo $row['userid']; ?></td>
+                                                <td><?php echo $row['amount']; ?></td>
+                                                <td><?php echo $row['date']; ?></td>
+                                            </tr>
+                                        <?php
+											$i++;
+										}
+									}
+									else{
+									?>
+                                    	<tr>
+                                        	<td colspan="5">No user exist</td>
+                                        </tr>
+                                    <?php
+									}
+                                ?>
+                                </tbody>
                             </table>
                         </div>
                     </div>
